@@ -45,6 +45,16 @@ class Timezone
     }
 
     /**
+     * @param $date
+     * @return Carbon
+     */
+    public function convertFromTimezone($date, $timezone) : Carbon
+    {
+        return Carbon::parse($date, $timezone)->setTimezone('UTC');
+    }
+
+    
+    /**
      * @param  Carbon  $date
      * @return string
      */
