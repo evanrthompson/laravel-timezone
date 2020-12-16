@@ -48,12 +48,41 @@ class Timezone
      * @param $date
      * @return Carbon
      */
+    public function convertToTimezone(?Carbon $date, $timezone, $format = null, $format_timezone = false) : string
+    {
+
+        if (is_null($date)) {
+            return 'Empty';
+        }
+
+        $date->setTimezone($timezone);
+
+        if (is_null($format)) {
+            return $date->format(config('timezone.format'));
+        }
+
+        $formatted_date_time = $date->format($format);
+
+        if ($format_timezone) {
+
+            return $formatted_date_time . ' ' . $this->formatTimezone($date);
+
+        }
+
+        return $formatted_date_time;
+
+    }
+
+    /**
+     * @param $date
+     * @return Carbon
+     */
     public function convertFromTimezone($date, $timezone) : Carbon
     {
         return Carbon::parse($date, $timezone)->setTimezone('UTC');
     }
 
-    
+
     /**
      * @param  Carbon  $date
      * @return string
